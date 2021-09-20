@@ -4,7 +4,7 @@
 #include <stdio.h>
 #define MAX 100
 
-typedef char
+typedef int
     tp_item;
 
 typedef struct {

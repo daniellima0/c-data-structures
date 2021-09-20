@@ -51,7 +51,7 @@ void imprime_pilha(tp_pilha p) {
     printf("\n");
     while (!pilha_vazia(&p)) {
         pop(&p, &e);
-        printf("%d ", e);
+        printf("%c ", e);
     }
 }
 
