@@ -1,11 +1,11 @@
 #include<stdlib.h>
 #include<stdio.h>
 	
-typedef int tp_item;	
+typedef int item;	
 	
 typedef struct tp_no{
 	struct tp_no *esq;
-	tp_item info;
+	item info;
 	struct tp_no *dir;
 } tp_no; 
 
@@ -30,7 +30,7 @@ tp_no *aloca_no() //aloca e retorna o endereço
 	return no;
 }
 
-int insere_no(tp_arvore *raiz, tp_item e)
+int insere_no(tp_arvore *raiz, item e)
 {	tp_no *pai=NULL, *novo, *p;  //*p=ponteiro auxiliar
 	novo=aloca_no();//cria um novo elemento e coloca o endereço dele no novo
 	if(!novo) return 0; //não deu para alocar (novo==null)
@@ -87,7 +87,7 @@ void pos_ordem (tp_no *p) { //imprime os elementos em pós-ordem
 }
 
 
-tp_no* busca_no (tp_no *p, tp_item e) {
+tp_no* busca_no (tp_no *p, item e) {
 	while (p != NULL) { 
 		if (e < p->info) 
 			p = p->esq; 
@@ -99,7 +99,7 @@ tp_no* busca_no (tp_no *p, tp_item e) {
 	};
  	return (NULL); 
 }
-tp_arvore busca_no_rec (tp_arvore p, tp_item e) {
+tp_arvore busca_no_rec (tp_arvore p, item e) {
 	if (p != NULL) { 
 		if (e < p->info) 
 			return busca_no_rec(p->esq, e); 
@@ -134,7 +134,7 @@ int qtde_nos(tp_arvore raiz){
 }
 
 
-int remove_no (tp_arvore *raiz, tp_item e ) {
+int remove_no (tp_arvore *raiz, item e ) {
 	tp_no  *p=*raiz,   *ant=NULL,   *sub,   *pai,   *filho;
 	while (p!=NULL && p->info!=e) {
 		ant=p;
