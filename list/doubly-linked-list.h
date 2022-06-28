@@ -1,5 +1,6 @@
 #ifndef DOUBLY_LINKED_LIST_H
 #define DOUBLY_LINKED_LIST_H
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -72,7 +73,7 @@ void print_dllist(dllist *l, int order) {
             break;
 
         default:
-            printf("invalid code");
+            printf("Invalid code");
     }
 }
 

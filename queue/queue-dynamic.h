@@ -1,3 +1,6 @@
+#ifndef QUEUE_DYNAMIC_H
+#define QUEUE_DYNAMIC_H
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -89,3 +92,5 @@ queue *destroy_queue(queue *q) {
     free(q);
     return NULL;
 }
+
+#endif

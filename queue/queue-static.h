@@ -1,5 +1,5 @@
-#ifndef QUEUE_H
-#define QUEUE_H
+#ifndef QUEUE_STATIC_H
+#define QUEUE_STATIC_H
 
 #include <stdio.h>
 #define MAX 100

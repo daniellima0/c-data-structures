@@ -1,5 +1,5 @@
-#ifndef STACK_H
-#define STACK_H
+#ifndef STACK_STATIC_H
+#define STACK_STATIC_H
 
 #include <stdio.h>
 #define MAX 100
