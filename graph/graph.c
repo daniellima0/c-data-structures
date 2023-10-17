@@ -1,19 +1,12 @@
 #include "./graph.h"
 #include <string.h>
 
-Graph initializeGraph(FILE *filePointer)
+int getNumberOfVertices(FILE *filePointer)
 {
-    // Check if file exists
-    if (filePointer == NULL)
-    {
-        perror("Error opening the file");
-        return (Graph){0};
-    }
-
     rewind(filePointer);
 
-    char currentChar = fgetc(filePointer);
     int numberOfVertices = 0;
+    char currentChar = fgetc(filePointer);
 
     while (currentChar != '\n')
     {
@@ -27,12 +20,17 @@ Graph initializeGraph(FILE *filePointer)
         currentChar = fgetc(filePointer);
     }
 
+    return numberOfVertices;
+}
+
+char *getVertices(FILE *filePointer, int numberOfVertices)
+{
     rewind(filePointer);
 
     char *vertices = (char *)malloc(numberOfVertices * sizeof(char));
-
     int counter = 0;
-    currentChar = fgetc(filePointer);
+    char currentChar = fgetc(filePointer);
+
     while (currentChar != '\n')
     {
         if (currentChar == ' ')
@@ -46,6 +44,11 @@ Graph initializeGraph(FILE *filePointer)
         currentChar = fgetc(filePointer);
     }
 
+    return vertices;
+}
+
+char **getAdjacencyLists(FILE *filePointer, char *vertices, int numberOfVertices)
+{
     int **adjacencyMatrix = (int **)malloc(numberOfVertices * sizeof(int *));
 
     for (size_t i = 0; i < numberOfVertices; i++)
@@ -85,10 +88,28 @@ Graph initializeGraph(FILE *filePointer)
         }
     }
 
-    return (Graph){
-        .numberOfVertices = numberOfVertices,
-        .adjacencyLists = adjacencyLists,
-        .vertices = vertices};
+    return adjacencyLists;
+}
+
+Graph initializeGraph(FILE *filePointer)
+{
+    // Check if file exists
+    if (filePointer == NULL)
+    {
+        perror("Error opening the file");
+        return (Graph){0};
+    }
+
+    Graph graph = {
+        .numberOfVertices = 0,
+        .adjacencyLists = NULL,
+        .vertices = NULL};
+
+    graph.numberOfVertices = getNumberOfVertices(filePointer);
+    graph.vertices = getVertices(filePointer, graph.numberOfVertices);
+    graph.adjacencyLists = getAdjacencyLists(filePointer, graph.vertices, graph.numberOfVertices);
+
+    return graph;
 }
 
 void printGraph(Graph graph)
