@@ -5,5 +5,5 @@
 ### Mac OS (using clang)
 
 ```bash
-clang graph.c main.c -o main; ./main
+clear; clang ./src/graph.c ./src/main.c -o ./obj/main; ./obj/main
 ```

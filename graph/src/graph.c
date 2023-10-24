@@ -1,5 +1,5 @@
-#include "./graph.h"
 #include <string.h>
+#include "../lib/graph.h"
 
 int getNumberOfVertices(FILE *filePointer)
 {
