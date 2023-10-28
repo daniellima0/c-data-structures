@@ -5,51 +5,61 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
-#include "fila.h"
+#include "queue.h"
 #include "graph.h"
 
-void flooding(Graph *gr, int *vizitados, int start);
+void flooding(Graph *graph, int *visited, int start);
 
-int mapeando_vertices(Vertex *vertex, Graph *gr);
+int map_vertices(Vertex *vertex, Graph *graph);
 
-void flooding(Graph *gr, int *vizitados, int start){
-    tp_fila fila;
-    inicializa_fila(&fila);
-    vizitados[start] = 1;
-    insere_fila(&fila, start);
-    while(!fila_vazia(&fila)){
+void flooding(Graph *graph, int *visited, int start)
+{
+    queue queue;
+    init_queue(&queue);
+    visited[start] = 1;
+    insert_item(&queue, start);
+    while (!is_queue_empty(&queue))
+    {
         int s;
-        remove_fila(&fila, &s);
-        Node *no_aux = gr->root[s].adjacency_list;
+        remove_item(&queue, &s);
+        Node *aux_node = graph->root[s].adjacency_list;
         int i;
-        for(i=0; i<gr->root[s].num_edges; i++){
-            no_aux = no_aux->next_node;
-            int v = mapeando_vertices(no_aux->vertex, gr);
-            if(!vizitados[v]){
-                vizitados[v] = 1;
-                insere_fila(&fila, v);
+        for (i = 0; i < graph->root[s].num_edges; i++)
+        {
+            aux_node = aux_node->next_node;
+            int v = map_vertices(aux_node->vertex, graph);
+            if (!visited[v])
+            {
+                visited[v] = 1;
+                insert_item(&queue, v);
             }
         }
     }
 }
 
-int mapeando_vertices(Vertex *vertex, Graph *gr){
+int map_vertices(Vertex *vertex, Graph *graph)
+{
     int i;
-    for(i=0; i<gr->num_vertices; i++){
-        if(vertex == &gr->root[i]){
+    for (i = 0; i < graph->num_vertices; i++)
+    {
+        if (vertex == &graph->root[i])
+        {
             return i;
         }
     }
     return -1;
 }
 
-int conta_conexo(Graph *gr){
+int count_connected_components(Graph *graph)
+{
     int i, count = 0;
-    int vizitados[gr->num_vertices];
-    memset(vizitados, 0, sizeof(vizitados));
-    for(i=0; i<gr->num_vertices; i++){
-        if(!vizitados[i]){
-            flooding(gr, vizitados, i);
+    int visited[graph->num_vertices];
+    memset(visited, 0, sizeof(visited));
+    for (i = 0; i < graph->num_vertices; i++)
+    {
+        if (!visited[i])
+        {
+            flooding(graph, visited, i);
             count++;
         }
     }
